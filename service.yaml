@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ktor-app
+  namespace: default
+  labels:
+    app: ktor-app
+    version: 0.0.3
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30009
+  selector:
+    app.kubernetes.io/instance: ktor-app
+    app.kubernetes.io/name: ktor-app
+  type: NodePort

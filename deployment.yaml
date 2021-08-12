@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ktor-app
+  namespace: default
+  labels:
+    app: ktor-app
+    version: 0.0.3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: ktor-app
+      app.kubernetes.io/name: ktor-app
+  template:
+    metadata:
+      labels:
+        app: ktor-app
+        version: 0.0.3
+        app.kubernetes.io/instance: ktor-app
+        app.kubernetes.io/name: ktor-app
+        app.kubernetes.io/version: 0.0.3
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: nginx
+        image: vwassa/ktor_app:0.0.3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+              path: /health/check
+              port: 8080
+              scheme: HTTP
+          initialDelaySeconds: 15
+          timeoutSeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 60
+        livenessProbe:
+          httpGet:
+            path: /health/check
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 180
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 30
+        resources:
+          limits:
+            cpu: 300m
+            memory: 256Mi
+          requests:
+            cpu: 200m
+            memory: 100Mi
