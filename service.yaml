@@ -11,8 +11,7 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 30009
   selector:
     app.kubernetes.io/instance: ktor-app
     app.kubernetes.io/name: ktor-app
-  type: NodePort
+  type:  LoadBalancer
