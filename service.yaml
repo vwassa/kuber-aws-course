@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: ktor-app
-  namespace: default
+  namespace: app
   labels:
     app: ktor-app
     version: 0.0.3

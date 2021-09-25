@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ktor-app
-  namespace: default
+  namespace: app
   labels:
     app: ktor-app
     version: 0.0.3
